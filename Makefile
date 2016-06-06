@@ -1,4 +1,4 @@
-CFLAGS=-O3 -lm
+CFLAGS=-O3 -lm -std=c99
 TAIL_CFLAGS=${CFLAGS} -I ${TAIL_ROOT}/include
 TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 RUNS=30 # Note: hardcoded in APL programs.
