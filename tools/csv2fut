@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import numpy
+import sys
+
+numpy.set_printoptions(threshold=numpy.nan,suppress=True)
+
+filename = sys.argv[1]
+tp = sys.argv[2] if len(sys.argv) > 2 else 'float'
+
+print numpy.loadtxt(open(filename,"rb"),delimiter=",",skiprows=1,dtype=tp).flatten().tolist()

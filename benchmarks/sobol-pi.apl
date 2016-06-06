@@ -1,4 +1,4 @@
-dirVecf   ← ReadCSVInt '../data/direction_vectors'
+dirVecf   ← ReadCSVInt 'direction_vectors'
 bitsNum   ← 30
 dirVec    ← ⌷2 bitsNum ⍴ dirVecf
 grayCode ← { ⍵ xor ⍵ srl 1 }
@@ -18,7 +18,7 @@ sobolIndR ← {
 }
 
 ⍝ Number of iterations
-n ← 10000000
+n ← 1000000
 
 ⍝ Compute pi
 pi ← {

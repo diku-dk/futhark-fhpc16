@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Hacky script for generating input to a Futhark benchmark that needs it.
+#
+# Not necessary for TAIL, because TAIL can do I/O.
+
+case $1 in
+    sobol-pi)
+        csv2fut input/direction_vectors 'int'
+    ;;
+esac
