@@ -12,11 +12,11 @@ ifndef TAIL_ROOT
 $(error TAIL_ROOT is not set)
 endif
 
-.PHONY: clean
+.PHONY: clean benchmark_hotspot
 
 all: $(BENCHMARKS:%=benchmark_%)
 
-$(BENCHMARKS:%=benchmark_%): $(BENCHMARKS:%=runtimes/%-tail.avgtime) $(BENCHMARKS:%=runtimes/%-futhark-c.avgtime) $(BENCHMARKS:%=runtimes/%-futhark-opencl.avgtime)
+$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
 	mkdir -p runtimes
