@@ -15,14 +15,7 @@ easter←{                     ⍝ Easter Sunday in year ⍵
 
 run ← {
   ⍵ 
-  ⌈/easter¨⍳ 100000
+  ⌈/easter¨⍳ 10000000
 }
 
-run2 ← { ⌊/run ¨ ⍳ ⍵ }
-
-test ← {
-  ⍵ + 1 
-  run2 400
-}
-
-(test bench 30) 0
+(run bench 30) 0
