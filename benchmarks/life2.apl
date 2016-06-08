@@ -15,7 +15,7 @@ life ← {
 
 glider ← 3 3⍴1 1 1 1 0 0 0 1 0
 
-board ← ⍉ ¯10 ↑ ⍉ ¯10 ↑ glider
+board ← ⍉ ¯300 ↑ ⍉ ¯300 ↑ glider
 square ← { x ← (5 ⊖ ⍵), 3 ⌽ ⍉ ⍵ ⋄ x ⍪ 4 ⊖ x }
 
 board ← square board
@@ -24,7 +24,7 @@ board ← ⌷square board
 
 life2 ← {
   ⍵
-  +/+/ (life ⍣ 20000) board
+  +/+/ (life ⍣ 100) board
 }
 
 r ← (life2 bench 1) 0
