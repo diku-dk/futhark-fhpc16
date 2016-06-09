@@ -43,7 +43,7 @@ compiled/%-futhark-opencl: compiled/%.fut
 	futhark-opencl $< -o $@
 
 compiled/%.fut: compiled/%.tail
-	tail2futhark --float-as-single $< > $@
+	tail2futhark $< > $@
 
 compiled/%.tail: benchmarks/%.apl
 	aplt  -p_types -p_tail -c -o $@ ${TAIL_PRELUDE} $<
