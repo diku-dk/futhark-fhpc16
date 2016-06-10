@@ -7,9 +7,13 @@
 case $1 in
     sobol-pi)
         csv2fut input/direction_vectors 'int'
-    ;;
-    hotspot)
+        ;;
+    hotspot) csv2fut input/temp_512 'float'
+             csv2fut input/power_512 'float'
+             ;;
+    hotspot-byhand)
+        echo 360 512 512
         csv2fut input/temp_512 'float'
         csv2fut input/power_512 'float'
-    ;;
+        ;;
 esac
