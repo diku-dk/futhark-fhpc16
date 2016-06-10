@@ -18,7 +18,7 @@ all: $(BENCHMARKS:%=benchmark_%)
 
 benchmark_mandelbrot: runtimes/mandelbrot-futhark-c.avgtime runtimes/mandelbrot-futhark-opencl.avgtime runtimes/mandelbrot-byhand-futhark-c.avgtime runtimes/mandelbrot-byhand-futhark-opencl.avgtime
 
-$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime
+$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
 	mkdir -p runtimes
