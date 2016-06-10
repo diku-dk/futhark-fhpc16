@@ -27,7 +27,7 @@ life2 ← {
   +/+/ (life ⍣ 100) board
 }
 
-r ← (life2 bench 1) 0
+r ← (life2 bench 30) 0
 r
 
 ⍝ ⎕ ← a

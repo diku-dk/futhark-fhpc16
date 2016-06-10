@@ -6,7 +6,7 @@ TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 RUNS=30 # Note: hardcoded in APL programs.
 
 COMPILERS=tail futhark-c futhark-opencl
-BENCHMARKS=signal easter funintegral life2 blackscholes sobol-pi hotspot
+BENCHMARKS=signal easter funintegral life blackscholes sobol-pi hotspot
 
 ifndef TAIL_ROOT
 $(error TAIL_ROOT is not set)
