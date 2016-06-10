@@ -42,8 +42,8 @@ fun [[int,screenX],screenY] mandelbrot(int screenX, int screenY, int depth, (f32
 
 fun [[f32]] main() =
   let depth = 255
-  let screenX = 400
-  let screenY = 400
+  let screenX = 1000
+  let screenY = 1000
   let view = (-2.0, -0.75, 0.75, 0.75)
   let escapes = mandelbrot(screenX, screenY, depth, view)
   in map(fn [f32,screenX] ([int] row) =>

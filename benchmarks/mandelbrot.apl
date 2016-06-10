@@ -30,6 +30,6 @@ mandelWrap ← {
   ⎕ ← ⍵ mandelbrot ¯2 0.75 ¯0.75 0.75
 }
 
-mandelWrap 400 400
+mandelWrap 1000 1000
 
 0
