@@ -16,6 +16,8 @@ endif
 
 all: $(BENCHMARKS:%=benchmark_%)
 
+benchmark_mandelbrot: runtimes/mandelbrot-futhark-c.avgtime runtimes/mandelbrot-futhark-opencl.avgtime runtimes/mandelbrot-byhand-futhark-c.avgtime runtimes/mandelbrot-byhand-futhark-opencl.avgtime
+
 $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
@@ -23,13 +25,16 @@ runtimes/%-tail.avgtime: compiled/%-tail
 	(cd input && ../compiled/$*-tail) | grep AVGTIMING | awk '{print $$2}' > $@
 
 runtimes/%.avgtime: runtimes/%.runtimes
+	mkdir -p runtimes
 	awk '{sum += strtonum($$0) / 1000.0} END{print sum/NR}' < $< > $@
 
 runtimes/%-futhark-c.runtimes: compiled/%-futhark-c
-	futinput $* | compiled/$*-futhark-c -r ${RUNS} -t $@
+	mkdir -p runtimes
+	futinput $* | compiled/$*-futhark-c -r ${RUNS} -t $@ > /dev/null
 
 runtimes/%-futhark-opencl.runtimes: compiled/%-futhark-opencl
-	futinput $* | compiled/$*-futhark-opencl -r ${RUNS} -t $@
+	mkdir -p runtimes
+	futinput $* | compiled/$*-futhark-opencl -r ${RUNS} -t $@ > /dev/null
 
 compiled/%-tail: benchmarks/%.apl
 	mkdir -p compiled
@@ -37,16 +42,28 @@ compiled/%-tail: benchmarks/%.apl
 	gcc -o $@ -O3 compiled/$*-tail.c ${TAIL_CFLAGS}
 
 compiled/%-futhark-c: compiled/%.fut
+	mkdir -p compiled
 	futhark-c $< -o $@
 
 compiled/%-futhark-opencl: compiled/%.fut
+	mkdir -p compiled
+	futhark-opencl $< -o $@
+
+compiled/%-byhand-futhark-c: benchmarks/%-byhand.fut
+	mkdir -p compiled
+	futhark-c $< -o $@
+
+compiled/%-byhand-futhark-opencl: benchmarks/%-byhand.fut
+	mkdir -p compiled
 	futhark-opencl $< -o $@
 
 compiled/%.fut: compiled/%.tail
-	tail2futhark $< > $@
+	mkdir -p compiled
+	tail2futhark --float-as-single $< > $@
 
 compiled/%.tail: benchmarks/%.apl
-	aplt  -p_types -p_tail -c -o $@ ${TAIL_PRELUDE} $<
+	mkdir -p compiled
+	aplt  -p_types -s_tail -c -o $@ ${TAIL_PRELUDE} $<
 
 clean:
 	rm -rf runtimes
