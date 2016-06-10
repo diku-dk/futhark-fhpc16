@@ -10,9 +10,9 @@
 fun f32 f(f32 x) = 2.0f32 / (x + 2.0f32)
 
 fun f32 main() =
-  let X  = 10000000 in 
-  let fX = f32(X) in
-  let domain   = map( *10.0f32, map( /fX, map(f32,iota(X)) ) ) in
+  let x  = 10000000 in 
+  let fX = f32(x) in
+  let domain   = map( *10.0f32, map( /fX, map(f32,iota(x)) ) ) in
   let integral = reduce( +, 0.0f32, map(/fX, map(f,domain)) )  in
   integral 
 

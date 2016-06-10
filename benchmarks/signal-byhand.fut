@@ -8,16 +8,16 @@
 --}
 -- (test bench 30) 0
 
-fun [f32,n] diff ([f32,n] X) =  -- probably the BUG is here in "rotate"
+fun [f32,n] diff ([f32,n] x) =  -- probably the BUG is here in "rotate"
   map(fn f32 (int i) =>
-        let xip1 = if i == n-1 then X[0] else unsafe X[i+1] 
-        in  (X[i] - xip1)
+        let xip1 = if i == n-1 then x[0] else unsafe x[i+1] 
+        in  (x[i] - xip1)
      , iota(n))
 
-fun [f32,n] signal([f32,n] X) = 
-  let ds0 = diff(X) in
-  let ds1 = map ( fn f32 (f32 d, f32 x) => d / (x+0.01f32)
-                , zip(ds0, X) ) 
+fun [f32,n] signal([f32,n] x) = 
+  let ds0 = diff(x) in
+  let ds1 = map ( fn f32 (f32 d, f32 xx) => d / (xx+0.01f32)
+                , zip(ds0, x) ) 
   in
   let ds2 = map ( *50.0f32, ds1 ) in
   map(fn f32 (f32 x) =>

@@ -19,21 +19,21 @@
 --(run bench 30) 0
 
 fun int easter(int i) = 
-  let G = (i % 19) + 1 in
-  let C = i / 100 + 1  in
-  let X = (C*3)/4 - 12 in
-  let Z = (5+8*C)/25 - 5 in
-  let S = (5*i)/4 - (X + 10) in
-  let E = (11*G+20+Z-X) % 30 in
-  let b = if (E == 24) || ((E==25) && (G >11)) then 1 else 0 in
-  let F = E + b in
-  let b = if F > 23 then 1 else 0 in
-  let N = 30*b + (44 - F) in
-  let N = N + 7 - (S+N) % 7 in
-  let b = if N > 31 then 1 else 0 in
-  let M = 3 + b in
-  let D = N - 31*b in
-  10000*i + 100*M + D
+  let g = (i % 19) + 1 in
+  let c = i / 100 + 1  in
+  let x = (c*3)/4 - 12 in
+  let z = (5+8*c)/25 - 5 in
+  let s = (5*i)/4 - (x + 10) in
+  let e = (11*g+20+z-x) % 30 in
+  let b = if (e == 24) || ((e==25) && (g >11)) then 1 else 0 in
+  let f = e + b in
+  let b = if f > 23 then 1 else 0 in
+  let n = 30*b + (44 - f) in
+  let n = n + 7 - (s+n) % 7 in
+  let b = if n > 31 then 1 else 0 in
+  let m = 3 + b in
+  let d = n - 31*b in
+  10000*i + 100*m + d
   
 fun int max(int x, int y) = if x < y then y else x
 
