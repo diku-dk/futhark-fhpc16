@@ -14,7 +14,10 @@ endif
 
 .PHONY: clean benchmark_hotspot
 
-all: $(BENCHMARKS:%=benchmark_%)
+all: $(BENCHMARKS:%=benchmark_%) plot.png
+
+plot.pdf: $(BENCHMARKS:%=benchmark_%)
+	python tools/plot.py $@ $(BENCHMARKS)
 
 benchmark_mandelbrot: runtimes/mandelbrot-futhark-c.avgtime runtimes/mandelbrot-futhark-opencl.avgtime runtimes/mandelbrot-byhand-futhark-c.avgtime runtimes/mandelbrot-byhand-futhark-opencl.avgtime
 
@@ -27,6 +30,14 @@ runtimes/%-tail.avgtime: compiled/%-tail
 runtimes/%.avgtime: runtimes/%.runtimes
 	mkdir -p runtimes
 	awk '{sum += strtonum($$0) / 1000.0} END{print sum/NR}' < $< > $@
+
+# Fallback rules for missing implementations
+runtimes/blackscholes-byhand-futhark-c.avgtime:
+	echo 0 > $@
+runtimes/blackscholes-byhand-futhark-opencl.avgtime:
+	echo 0 > $@
+runtimes/mandelbrot-tail.avgtime:
+	echo 0 > $@
 
 runtimes/%-futhark-c.runtimes: compiled/%-futhark-c
 	mkdir -p runtimes
@@ -68,3 +79,4 @@ compiled/%.tail: benchmarks/%.apl
 clean:
 	rm -rf runtimes
 	rm -rf compiled
+	rm -f plot.pdf
