@@ -6,7 +6,7 @@ TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 RUNS=30 # Note: hardcoded in APL programs.
 
 COMPILERS=tail futhark-c futhark-opencl
-BENCHMARKS=signal easter funintegral life blackscholes sobol-pi hotspot
+BENCHMARKS=signal easter funintegral life blackscholes sobol-pi hotspot mandelbrot1 mandelbrot2
 
 ifndef TAIL_ROOT
 $(error TAIL_ROOT is not set)
@@ -19,7 +19,9 @@ all: $(BENCHMARKS:%=benchmark_%) plot.png
 plot.pdf: $(BENCHMARKS:%=benchmark_%)
 	python tools/plot.py $@ $(BENCHMARKS)
 
-benchmark_mandelbrot: runtimes/mandelbrot-futhark-c.avgtime runtimes/mandelbrot-futhark-opencl.avgtime runtimes/mandelbrot-byhand-futhark-c.avgtime runtimes/mandelbrot-byhand-futhark-opencl.avgtime
+benchmark_mandelbrot1: runtimes/mandelbrot1-futhark-c.avgtime runtimes/mandelbrot1-futhark-opencl.avgtime runtimes/mandelbrot1-byhand-futhark-c.avgtime runtimes/mandelbrot1-byhand-futhark-opencl.avgtime
+
+benchmark_mandelbrot2: runtimes/mandelbrot2-futhark-c.avgtime runtimes/mandelbrot2-futhark-opencl.avgtime runtimes/mandelbrot2-byhand-futhark-c.avgtime runtimes/mandelbrot2-byhand-futhark-opencl.avgtime
 
 $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
 
@@ -36,7 +38,9 @@ runtimes/blackscholes-byhand-futhark-c.avgtime:
 	echo 0 > $@
 runtimes/blackscholes-byhand-futhark-opencl.avgtime:
 	echo 0 > $@
-runtimes/mandelbrot-tail.avgtime:
+runtimes/mandelbrot1-tail.avgtime:
+	echo 0 > $@
+runtimes/mandelbrot2-tail.avgtime:
 	echo 0 > $@
 
 runtimes/%-futhark-c.runtimes: compiled/%-futhark-c
