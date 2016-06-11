@@ -15,7 +15,7 @@ import os
 outputfile = sys.argv[1]
 programs = sys.argv[2:]
 variants = ['tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
-legend = ['TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpencL', 'Futhark C', 'Futhark OpenCL']
+legend = ['TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL', 'Futhark C', 'Futhark OpenCL']
 colours = ['#ff5555', '#559955', '#5555ff', '#888888', '#aa7799']
 
 baseline_variant = 'tail'
@@ -60,9 +60,7 @@ ax.set_ylim([0.5,100.0])
 ax.set_ylabel('Speedup')
 ax.set_xticks(ind + M*width/2)
 ax.set_xticklabels(programs)
-plt.tick_params(axis='both', which='major', pad=50)
-
-ax.xaxis.labelpad = 40
+plt.tick_params(axis='x', which='major', pad=60)
 
 ax.yaxis.set_major_formatter(plt.ScalarFormatter())
 
@@ -74,10 +72,10 @@ for (i, variant) in zip(range(M), variants):
     rects = ax.bar(ind+i*width, values, width, color=colours[i])
 
     for rect in rects:
-        height = 0.38 - (0.08 if i%2==0 else 0)
+        height = 0.45
         ax.text(rect.get_x() + rect.get_width()/2., height,
                 '%.1f' % rect.get_height(),
-                ha='center', va='bottom')
+                ha='center', va='top', rotation='90')
 
     allrects.append(rects)
 
