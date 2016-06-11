@@ -4,6 +4,11 @@
 
 import numpy as np
 import sys
+
+import matplotlib
+
+matplotlib.use('Agg') # For headless use
+
 import matplotlib.pyplot as plt
 import os
 
