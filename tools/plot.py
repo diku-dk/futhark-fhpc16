@@ -10,7 +10,7 @@ import os
 outputfile = sys.argv[1]
 programs = sys.argv[2:]
 variants = ['tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
-legend = ['TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpencL', 'Futhark C', 'Futhark OpenCL']
+legend = ['TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL', 'Futhark C', 'Futhark OpenCL']
 colours = ['#ff5555', '#559955', '#5555ff', '#888888', '#aa7799']
 
 baseline_variant = 'tail'
