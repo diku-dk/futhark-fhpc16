@@ -11,7 +11,7 @@ mandelbrot ← {
   dy ← ((yRng[2])-yRng[1]) ÷ Y
   cxA ← Y X ⍴ (xRng[1]) + dx × ⍳X        ⍝ real plane
   cyA ← ⍉ X Y ⍴ (yRng[1]) + dy × ⍳Y      ⍝ img plane
-  N ← 90                                 ⍝ iterations
+  N ← 255                                ⍝ iterations
   mandel1 ← {
     cx ← ⍺
     cy ← ⍵
@@ -35,7 +35,7 @@ mandelbrot ← {
 
 mandelWrap ← {
   ⍵
-  +/+/ 1000 1000 mandelbrot ¯2 0.75 ¯0.75 0.75
+  +/ (1000 × 1000) ⍴ 1000 1000 mandelbrot ¯2 0.75 ¯0.75 0.75
 }
 
 ⎕ ← (mandelWrap bench 30) 0
