@@ -16,17 +16,18 @@ mandelbrot ← {
     cx ← ⍺
     cy ← ⍵
     f ← {
-      arg ← 3 ⍴ ⍵
+      arg ← ⍵
       x ← arg[1]                         ⍝ real value
       y ← arg[2]                         ⍝ imaginary value
       count ← arg[3]
+      dummy ← arg[4]
       zx ← cx+(x×x)-(y×y)
       zy ← cy+(x×y)+(x×y)
       conv ← 4 > (zx × zx) + zy × zy
       count2 ← count + 1 - conv
-      (zx zy count2)
+      (zx zy count2 dummy)
     }
-    res ← (f ⍣ N) (0 0 0)                ⍝ perform N iteration of a single mandelbrot point
+    res ← (f ⍣ N) (0 0 0 'dummy')                ⍝ perform N iteration of a single mandelbrot point
     res[3]
   }
   res ← cxA mandel1¨ cyA
