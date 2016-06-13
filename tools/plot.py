@@ -73,9 +73,10 @@ for (i, variant) in zip(range(M), variants):
 
     for rect in rects:
         height = 0.45
-        ax.text(rect.get_x() + rect.get_width()/2., height,
-                '%.1f' % rect.get_height(),
-                ha='center', va='top', rotation='90')
+        if rect.get_height() > 0:
+            ax.text(rect.get_x() + rect.get_width()/2., height,
+                    '%.1f' % rect.get_height(),
+                    ha='center', va='top', rotation='90')
 
     allrects.append(rects)
 
