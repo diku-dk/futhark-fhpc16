@@ -32,6 +32,7 @@ programs = {'funintegral'
             : { 'name': 'Mandelbrot2',
                 'size': r'''$1000 \times 1000, N = 255$'''}
             }
+order = ['funintegral', 'signal', 'life', 'easter', 'blackscholes', 'sobol-pi', 'hotspot', 'mandelbrot1', 'mandelbrot2']
 
 runtimes = {}
 for program in programs:
@@ -46,7 +47,7 @@ print(r'''
 & & & \multicolumn{2}{c}{\textbf{TAIL Futhark}} & \multicolumn{2}{c}{\textbf{Hand-written Futhark}} \\
 \textbf{Benchmark} & \textbf{Problem size} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
 
-for program in programs:
+for program in order:
 
     print(programs[program]['name'] + ' & ' +
           programs[program]['size'] + ' & ' +
