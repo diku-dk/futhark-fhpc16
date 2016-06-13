@@ -14,12 +14,10 @@ endif
 
 .PHONY: clean benchmark_hotspot
 
-all: $(BENCHMARKS:%=benchmark_%) plot.png
+all: $(BENCHMARKS:%=benchmark_%) plot.pdf
 
 plot.pdf: $(BENCHMARKS:%=benchmark_%)
 	python tools/plot.py $@ $(BENCHMARKS)
-
-benchmark_mandelbrot1: runtimes/mandelbrot1-futhark-c.avgtime runtimes/mandelbrot1-futhark-opencl.avgtime runtimes/mandelbrot1-byhand-futhark-c.avgtime runtimes/mandelbrot1-byhand-futhark-opencl.avgtime
 
 $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
 
