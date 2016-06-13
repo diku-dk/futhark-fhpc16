@@ -34,9 +34,10 @@ mandelbrot ← {
 }
 
 mandelWrap ← {
-  ⎕ ← (⌽⍵) ⍴ ⍵ mandelbrot ¯2 0.75 ¯0.75 0.75
+  ⍵
+  +/+/ 1000 1000 mandelbrot ¯2 0.75 ¯0.75 0.75
 }
 
-mandelWrap 1000 1000
+⎕ ← (mandelWrap bench 30) 0
 
 0

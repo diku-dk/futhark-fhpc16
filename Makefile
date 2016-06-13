@@ -21,8 +21,6 @@ plot.pdf: $(BENCHMARKS:%=benchmark_%)
 
 benchmark_mandelbrot1: runtimes/mandelbrot1-futhark-c.avgtime runtimes/mandelbrot1-futhark-opencl.avgtime runtimes/mandelbrot1-byhand-futhark-c.avgtime runtimes/mandelbrot1-byhand-futhark-opencl.avgtime
 
-benchmark_mandelbrot2: runtimes/mandelbrot2-futhark-c.avgtime runtimes/mandelbrot2-futhark-opencl.avgtime runtimes/mandelbrot2-byhand-futhark-c.avgtime runtimes/mandelbrot2-byhand-futhark-opencl.avgtime
-
 $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
@@ -34,13 +32,7 @@ runtimes/%.avgtime: runtimes/%.runtimes
 	awk '{sum += strtonum($$0) / 1000.0} END{print sum/NR}' < $< > $@
 
 # Fallback rules for missing implementations
-runtimes/blackscholes-byhand-futhark-c.avgtime:
-	echo 0 > $@
-runtimes/blackscholes-byhand-futhark-opencl.avgtime:
-	echo 0 > $@
 runtimes/mandelbrot1-tail.avgtime:
-	echo 0 > $@
-runtimes/mandelbrot2-tail.avgtime:
 	echo 0 > $@
 
 runtimes/%-futhark-c.runtimes: compiled/%-futhark-c
