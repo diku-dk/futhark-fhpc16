@@ -40,7 +40,7 @@ for program in programs:
     for variant in variants:
         with open(os.path.join('runtimes', program + '-' + variant + ".avgtime")) as f:
             runtime = float(f.read())
-            runtimes[program][variant] = '-' if runtime == 0 else str(runtime)
+            runtimes[program][variant] = '-' if runtime == 0 else '%.2f' % runtime
 
 print(r'''
 \begin{tabular}{llrrrrr}
