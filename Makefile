@@ -14,10 +14,13 @@ endif
 
 .PHONY: clean benchmark_hotspot
 
-all: $(BENCHMARKS:%=benchmark_%) plot.pdf
+all: $(BENCHMARKS:%=benchmark_%) plot.pdf table.tex
 
 plot.pdf: $(BENCHMARKS:%=benchmark_%)
 	python tools/plot.py $@ $(BENCHMARKS)
+
+table.tex: $(BENCHMARKS:%=benchmark_%)
+	python tools/table.py > $@
 
 $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
 
