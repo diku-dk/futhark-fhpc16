@@ -12,7 +12,7 @@ programs = {'funintegral'
                'size': '$N = 50,000,000$'},
             'life'
             : {'name': 'Game of Life',
-               'size': r'''$N = 1200 \times 12000, N = 100$'''},
+               'size': r'''$1200 \times 12000, N = 100$'''},
             'easter'
             : {'name': 'Easter',
                'size': '$N = 10,000,000$'},
