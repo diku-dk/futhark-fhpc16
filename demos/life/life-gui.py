@@ -56,6 +56,8 @@ parser.add_argument('--height', metavar='INT', type=int, default=600,
                     help='Height of the world')
 parser.add_argument('--steps', metavar='INT', type=int, default=3,
                     help='Number of simulation steps to perform per frame')
+parser.add_argument('--scale', metavar='INT', type=int, default=1,
+                    help='Number of pixels per cell')
 
 parser.add_argument('--pattern', metavar='FILE', default=None,
                     help='File containing an RLE-encoded pattern')
@@ -65,10 +67,12 @@ args = parser.parse_args()
 width = args.width
 height = args.height
 steps=args.steps
+scale=args.scale
 size=(width,height)
+framesize=(width*scale, height*scale)
 stepsarr = numpy.array([steps], dtype=numpy.int32)
 sizearr = numpy.array(size, dtype=numpy.int32)
-frame = numpy.zeros((width,height,3), dtype=numpy.byte)
+frame = numpy.zeros((width*scale,height*scale,3), dtype=numpy.byte)
 
 if args.pattern:
     pattern_cells = numpy.array(expand_rle(args.pattern), dtype=numpy.int32).copy()
@@ -80,21 +84,22 @@ if args.pattern:
 else:
     world = numpy.random.choice([0, 1], size=(width*height)).astype(numpy.int32)
 
-screen = pygame.display.set_mode(size)
-surface = pygame.Surface(size)
+screen = pygame.display.set_mode(framesize)
+surface = pygame.Surface(framesize)
 
 l = life.life()
 
 def render(world):
-    world = l.main(stepsarr, sizearr, world).get().reshape(width*height).astype(numpy.int32)
+    world = l.main(stepsarr, sizearr, world).get().reshape(width,height).astype(numpy.int32)
+    world_expanded = numpy.repeat(numpy.repeat(world, scale, axis=0), scale, axis=1)
 
     frame[:,:,:] = 255
-    frame[world.reshape((width,height))==1,:] = 0
+    frame[world_expanded.reshape((width*scale,height*scale))==1,:] = 0
 
     pygame.surfarray.blit_array(surface, frame)
     screen.blit(surface, (0, 0))
     pygame.display.flip()
-    return world
+    return world.reshape(width*height)
 
 while True:
     world = render(world)
