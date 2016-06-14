@@ -81,6 +81,7 @@ for (i, variant) in zip(range(M), variants):
     allrects.append(rects)
 
 plt.grid(b=True, which='minor', color='#777777', linestyle='-')
+ax.yaxis.grid(True, linestyle='-')
 
 
 ax.legend([rects[0] for rects in allrects], legend, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
