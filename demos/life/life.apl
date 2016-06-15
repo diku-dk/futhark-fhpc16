@@ -30,6 +30,6 @@ data ← data > 0
 
 board ← dim ⍴ data
 
-⎕ ← steps nlife board
+⎕ ← dim ⍴ steps nlife board
 
 1

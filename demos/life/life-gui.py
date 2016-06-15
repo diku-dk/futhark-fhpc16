@@ -73,16 +73,14 @@ framesize=(width*scale, height*scale)
 stepsarr = numpy.array([steps], dtype=numpy.int32)
 sizearr = numpy.array(size, dtype=numpy.int32)
 frame = numpy.zeros((width*scale,height*scale,3), dtype=numpy.byte)
+world = numpy.zeros(size, dtype=numpy.int32)
 
 if args.pattern:
     pattern_cells = numpy.array(expand_rle(args.pattern), dtype=numpy.int32).copy()
 
-    world = numpy.zeros(size, dtype=numpy.int32)
     world[:pattern_cells.shape[0], :pattern_cells.shape[1]] = pattern_cells
-
-    world = world.reshape(width,height)
 else:
-    world = numpy.random.choice([0, 1], size=(width,height)).astype(numpy.int32)
+    world[:,:] = numpy.random.choice([0, 1], size=size)
 
 screen = pygame.display.set_mode(framesize)
 surface = pygame.Surface(framesize)
@@ -91,19 +89,16 @@ l = life.life()
 
 def render(paused, world):
     if not paused:
-        world = l.main(stepsarr, sizearr, world).get().reshape(width,height).astype(numpy.int32)
-    else:
-        world = world.reshape(width,height)
-
+        world = l.main(stepsarr, sizearr, world.reshape(width*height)).get().astype(numpy.int32)
     world_expanded = numpy.repeat(numpy.repeat(world, scale, axis=0), scale, axis=1)
 
     frame[:,:,:] = 255
-    frame[world_expanded.reshape((width*scale,height*scale))==1,:] = 0
+    frame[world_expanded==1,:] = 0
 
     pygame.surfarray.blit_array(surface, frame)
     screen.blit(surface, (0, 0))
     pygame.display.flip()
-    return world.reshape(width*height)
+    return world
 
 steps = -1
 while True:
@@ -131,8 +126,7 @@ while True:
                 i = int(x / scale)
                 j = int(y / scale)
                 n = 5
-                (world.reshape(width,height))[i:i+n,j:j+n] = numpy.random.choice([0,1], size=(n,n)).astype(numpy.int32)
-                world[i*height+j] = 1
+                world[i:i+n,j:j+n] = numpy.random.choice([0,1], size=(n,n)).astype(numpy.int32)
             except AttributeError:
                 pass
 
