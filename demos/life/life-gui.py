@@ -80,6 +80,7 @@ if args.pattern:
 
     world[:pattern_cells.shape[0], :pattern_cells.shape[1]] = pattern_cells
 else:
+    pattern_cells = numpy.empty((0,0), dtype=numpy.int32)
     world[:,:] = numpy.random.choice([0, 1], size=size)
 
 screen = pygame.display.set_mode(framesize)
@@ -127,6 +128,15 @@ while True:
                 j = int(y / scale)
                 n = 5
                 world[i:i+n,j:j+n] = numpy.random.choice([0,1], size=(n,n)).astype(numpy.int32)
+            except AttributeError:
+                pass
+        elif pygame.mouse.get_pressed()[2]:
+            try:
+                (x,y) = pygame.mouse.get_pos()
+                i = int(x / scale)
+                j = int(y / scale)
+                n, m = pattern_cells.shape
+                world[i:i+n,j:j+m] = pattern_cells
             except AttributeError:
                 pass
 
