@@ -8,6 +8,10 @@ RUNS=30 # Note: hardcoded in APL programs.
 COMPILERS=tail futhark-c futhark-opencl
 BENCHMARKS=signal easter funintegral life blackscholes sobol-pi hotspot mandelbrot1 mandelbrot2
 
+# OpenCL configuration.  Leave blank for default.
+OPENCL_PLATFORM=
+OPENCL_DEVICE=
+
 ifndef TAIL_ROOT
 $(error TAIL_ROOT is not set)
 endif
@@ -44,7 +48,7 @@ runtimes/%-futhark-c.runtimes: compiled/%-futhark-c
 
 runtimes/%-futhark-opencl.runtimes: compiled/%-futhark-opencl
 	mkdir -p runtimes
-	futinput $* | compiled/$*-futhark-opencl -r ${RUNS} -t $@ > /dev/null
+	futinput $* | compiled/$*-futhark-opencl -p "${OPENCL_PLATFORM}" -d "${OPENCL_DEVICE}" -r ${RUNS} -t $@ > /dev/null
 
 compiled/%-tail: benchmarks/%.apl
 	mkdir -p compiled
@@ -79,3 +83,4 @@ clean:
 	rm -rf runtimes
 	rm -rf compiled
 	rm -f plot.pdf
+	rm -f table.tex
