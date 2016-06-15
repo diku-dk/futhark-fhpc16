@@ -32,7 +32,4 @@ board ← dim ⍴ data
 
 ⎕ ← steps nlife board
 
-⍝ ⎕ ← 'Stable: '
-⍝ s ← ∧/∧/a=b
-⍝ ⎕ ← s+0
 1
