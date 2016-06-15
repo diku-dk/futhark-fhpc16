@@ -58,12 +58,12 @@ parser.add_argument('--steps', metavar='INT', type=int, default=3,
                     help='Number of simulation steps to perform per frame')
 parser.add_argument('--scale', metavar='INT', type=int, default=1,
                     help='Number of pixels per cell')
-
+parser.add_argument('--paused', help='Start the simulation paused', action='store_true')
 parser.add_argument('--pattern', metavar='FILE', default=None,
                     help='File containing an RLE-encoded pattern')
 
 args = parser.parse_args()
-
+paused = args.paused
 width = args.width
 height = args.height
 steps=args.steps
@@ -80,17 +80,21 @@ if args.pattern:
     world = numpy.zeros(size, dtype=numpy.int32)
     world[:pattern_cells.shape[0], :pattern_cells.shape[1]] = pattern_cells
 
-    world = world.reshape(width*height)
+    world = world.reshape(width,height)
 else:
-    world = numpy.random.choice([0, 1], size=(width*height)).astype(numpy.int32)
+    world = numpy.random.choice([0, 1], size=(width,height)).astype(numpy.int32)
 
 screen = pygame.display.set_mode(framesize)
 surface = pygame.Surface(framesize)
 
 l = life.life()
 
-def render(world):
-    world = l.main(stepsarr, sizearr, world).get().reshape(width,height).astype(numpy.int32)
+def render(paused, world):
+    if not paused:
+        world = l.main(stepsarr, sizearr, world).get().reshape(width,height).astype(numpy.int32)
+    else:
+        world = world.reshape(width,height)
+
     world_expanded = numpy.repeat(numpy.repeat(world, scale, axis=0), scale, axis=1)
 
     frame[:,:,:] = 255
@@ -101,8 +105,35 @@ def render(world):
     pygame.display.flip()
     return world.reshape(width*height)
 
+steps = -1
 while True:
-    world = render(world)
+    if steps == 0:
+        paused = True
+    if steps > 0:
+        steps -= 1
+    world = render(paused, world)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.unicode == 'p':
+                paused = not paused
+                steps = -1
+            if event.unicode == ' ':
+                if paused:
+                    paused = False
+                    steps = 1
+                else:
+                    paused = True
+        elif pygame.mouse.get_pressed()[0]:
+            try:
+                (x,y) = pygame.mouse.get_pos()
+                i = int(x / scale)
+                j = int(y / scale)
+                n = 5
+                (world.reshape(width,height))[i:i+n,j:j+n] = numpy.random.choice([0,1], size=(n,n)).astype(numpy.int32)
+                world[i*height+j] = 1
+            except AttributeError:
+                pass
+
+
