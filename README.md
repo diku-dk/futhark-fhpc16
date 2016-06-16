@@ -8,12 +8,13 @@ compiler](https://github.com/HIPERFIT/futhark) (`futhark-opencl` must
 be in your `$PATH`), [the `apltail`
 compiler](https://github.com/melsman/apltail/) and a working OpenCL
 setup.  You will need a *nix-like system.  OpenCL execution will by
-default use the first detected platform and device.
+default use the first detected platform and device.  You can edit the
+`Makefile` to select a different platform and device.
 
 The benchmark system is built using `make` (sorry).  Ideally, you just
 run `make` and it will build and run all benchmarks.  The result will
 be a speedup graph in a file called `plot.pdf`, and a runtime table in
-a file `graph.tex`.  There will also be a directory called `runtimes/`
+a file `table.tex`.  There will also be a directory called `runtimes/`
 that contains files with runtime measurements (in miliseconds).
 
 Of course, many things can go wrong.  You may need to modify the
