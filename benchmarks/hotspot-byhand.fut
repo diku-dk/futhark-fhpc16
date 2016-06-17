@@ -27,10 +27,10 @@ fun f32 amb_temp() = 80.0
 -- Single iteration of the transient solver in the grid model.
 -- advances the solution of the discretized difference equations by
 -- one time step
-fun [[f32]] single_iteration([[f32,col],row] temp, [[f32,col],row] power,
+fun [][]f32 single_iteration([row][col]f32 temp, [row][col]f32 power,
                               f32 cap, f32 rx, f32 ry, f32 rz,
                               f32 step) =
-  map (fn [f32] (int r) =>
+  map (fn []f32 (int r) =>
          map(fn f32 (int c) =>
                let delta =
                  (step / cap) *
@@ -73,7 +73,7 @@ fun [[f32]] single_iteration([[f32,col],row] temp, [[f32,col],row] power,
 -- difference equations by iterating.
 --
 -- Returns a new 'temp' array.
-fun [[f32,col],row] compute_tran_temp(int num_iterations, [[f32,col],row] temp, [[f32,col],row] power) =
+fun [row][col]f32 compute_tran_temp(int num_iterations, [row][col]f32 temp, [row][col]f32 power) =
   let grid_height = chip_height() / f32(row) in
   let grid_width = chip_width() / f32(col) in
   let cap = factor_chip() * spec_heat_si() * t_chip() * grid_width * grid_height in
@@ -88,7 +88,7 @@ fun [[f32,col],row] compute_tran_temp(int num_iterations, [[f32,col],row] temp, 
 
 fun f32 max(f32 x, f32 y) = if x < y then y else x
 
-fun f32 main(int num_iterations, int row, int col, [f32] temp, [f32] power) =
+fun f32 main(int num_iterations, int row, int col, []f32 temp, []f32 power) =
   let temp = reshape((row, col), temp)
   let power = reshape((row, col), power)
   let temp' = compute_tran_temp(num_iterations, temp, power)

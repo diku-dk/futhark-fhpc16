@@ -71,7 +71,7 @@ fun f32 callPrice(f32 w) =
   s() * cnd( d1(w) ) - t1
 
 -- avg ← { (+/⍵) ÷ ⊃⍴ ⍵ }
-fun f32 avg([f32,n] x) = 
+fun f32 avg([n]f32 x) = 
   reduce(+, 0.0f32, x) / f32(n)
 
 

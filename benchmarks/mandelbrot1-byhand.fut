@@ -22,12 +22,12 @@ fun complex addComplex(complex x, complex y) =
   (a + c,
    b + d)
 
-fun [[int,screenX],screenY] mandelbrot(int screenX, int screenY, int depth, (f32,f32,f32,f32) view) =
+fun [screenY][screenX]int mandelbrot(int screenX, int screenY, int depth, (f32,f32,f32,f32) view) =
   let (xmin, ymin, xmax, ymax) = view
   let sizex = xmax - xmin
   let sizey = ymax - ymin
   let c0s = reshape((screenX*screenY),
-                    map(fn [complex,screenX] (int y) =>
+                    map(fn [screenX]complex (int y) =>
                           map (fn complex (int x) =>
                                  (xmin + (f32(x) * sizex) / f32(screenX),
                                   ymin + (f32(y) * sizey) / f32(screenY)),
@@ -48,6 +48,6 @@ fun f32 main() =
   let view = (-2.0, -0.75, 0.75, 0.75)
   let escapes = mandelbrot(screenX, screenY, depth, view)
   in reduce(+, 0.0, reshape((1000*1000),
-                            map(fn [f32,screenX] ([int] row) =>
+                            map(fn [screenX]f32 ([]int row) =>
                                   map(/f32(depth), map(f32, row)),
                                 escapes)))

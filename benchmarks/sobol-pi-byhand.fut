@@ -1,6 +1,6 @@
 default(f32)
 
-fun [[int,30],2] dirvcts() = 
+fun [2][30]int dirvcts() = 
     [
 	    [
 		536870912, 268435456, 134217728, 67108864, 33554432, 16777216, 8388608, 4194304, 2097152, 1048576, 524288, 262144, 131072, 65536, 32768, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
@@ -25,17 +25,17 @@ fun bool testBit(int n, int ind) =
 ----    Currently Futhark hoists it outside, but this will
 ----    not allow fusing the filter with reduce => redomap,
 -----------------------------------------------------------------
-fun int xorInds(int n, [int,num_bits] dir_vs) =
+fun int xorInds(int n, [num_bits]int dir_vs) =
     let reldv_vals = map( fn int (int dv, int i) => 
                             if testBit(grayCode(n),i) 
                             then dv else 0
                         , zip(dir_vs,iota(num_bits)) ) in
     reduce( ^, 0, reldv_vals )
 
-fun [int,m] sobolIndI ( [[int,num_bits],m] dir_vs, int n ) =
+fun [m]int sobolIndI ( [m][num_bits]int dir_vs, int n ) =
     map( xorInds(n), dir_vs )
 
-fun [f32,m] sobolIndR( [[int,num_bits],m] dir_vs, int n ) =
+fun [m]f32 sobolIndR( [m][num_bits]int dir_vs, int n ) =
     let divisor = 2.0 ** f32(num_bits) in
     let arri    = sobolIndI( dir_vs, n )     in
         map( fn f32 (int x) => f32(x) / divisor, arri )
@@ -43,7 +43,7 @@ fun [f32,m] sobolIndR( [[int,num_bits],m] dir_vs, int n ) =
 fun f32 main() = 
     let n = 1000000 in
     let rand_nums = map(sobolIndR(dirvcts()), iota(n)) in
-    let dists     = map ( fn f32 ([f32,2] xy) =>
+    let dists     = map ( fn f32 ([2]f32 xy) =>
                             let (x,y) = (xy[0],xy[1]) in sqrt32(x*x + y*y)
                         , rand_nums)
     in

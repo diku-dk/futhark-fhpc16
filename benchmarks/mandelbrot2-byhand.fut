@@ -28,11 +28,11 @@ fun int divergence(int depth, complex c0) =
      j + if dot(c) < 4.0 then 1 else 0) in
   j
 
-fun [[int,screenX],screenY] mandelbrot(int screenX, int screenY, int depth, (f32,f32,f32,f32) view) =
+fun [screenY][screenX]int mandelbrot(int screenX, int screenY, int depth, (f32,f32,f32,f32) view) =
   let (xmin, ymin, xmax, ymax) = view in
   let sizex = xmax - xmin in
   let sizey = ymax - ymin in
-  map(fn [int,screenX] (int y) =>
+  map(fn [screenX]int (int y) =>
         map (fn int (int x) =>
                let c0 = (xmin + (f32(x) * sizex) / f32(screenX),
                          ymin + (f32(y) * sizey) / f32(screenY)) in
@@ -47,6 +47,6 @@ fun f32 main() =
   let view = (-2.0, -0.75, 0.75, 0.75)
   let escapes = mandelbrot(screenX, screenY, depth, view)
   in reduce(+, 0.0, reshape((1000*1000),
-                            map(fn [f32,screenX] ([int] row) =>
+                            map(fn [screenX]f32 ([]int row) =>
                                   map(/f32(depth), map(f32, row)),
                                 escapes)))
