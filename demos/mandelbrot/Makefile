@@ -9,7 +9,7 @@ TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 all: mandelbrot.py
 
 run: all
-	python mandelbrot-gui.py
+	python mandelbrot-gui.py --pick-device
 
 mandelbrot.py: mandelbrot.fut
 	futhark-pyopencl --library mandelbrot.fut

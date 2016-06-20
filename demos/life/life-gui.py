@@ -61,6 +61,8 @@ parser.add_argument('--scale', metavar='INT', type=int, default=1,
 parser.add_argument('--paused', help='Start the simulation paused', action='store_true')
 parser.add_argument('--pattern', metavar='FILE', default=None,
                     help='File containing an RLE-encoded pattern')
+parser.add_argument('--pick-device', action='store_true',
+                    help='Ask at startup for the OpenCL device to use')
 
 args = parser.parse_args()
 paused = args.paused
@@ -83,10 +85,10 @@ else:
     pattern_cells = numpy.empty((0,0), dtype=numpy.int32)
     world[:,:] = numpy.random.choice([0, 1], size=size)
 
+l = life.life(interactive=args.pick_device)
+
 screen = pygame.display.set_mode(framesize)
 surface = pygame.Surface(framesize)
-
-l = life.life()
 
 def render(paused, world):
     if not paused:

@@ -13,6 +13,8 @@ parser.add_argument('--width', metavar='INT', type=int, default=1200,
                     help='Width of the window')
 parser.add_argument('--height', metavar='INT', type=int, default=800,
                     help='Height of the window')
+parser.add_argument('--pick-device', action='store_true',
+                    help='Ask at startup for the OpenCL device to use')
 
 args = parser.parse_args()
 
@@ -27,14 +29,14 @@ maxy=0.75
 limit=255
 frame = numpy.zeros((width,height,3), dtype=numpy.byte)
 
+l = mandelbrot.mandelbrot(interactive=args.pick_device)
+
 pygame.init()
 pygame.display.set_caption('Mandelbrot APL demo')
 screen = pygame.display.set_mode(size)
 surface = pygame.Surface(size)
 font = pygame.font.Font(None, 36)
 pygame.key.set_repeat(1, 1)
-
-l = mandelbrot.mandelbrot()
 
 def showText(what, where):
     text = font.render(what, 1, (255, 255, 255))

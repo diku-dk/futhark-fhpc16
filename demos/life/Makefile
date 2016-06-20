@@ -9,7 +9,7 @@ TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 all: life.py
 
 run: all
-	python life-gui.py
+	python life-gui.py --pick-device
 
 life.py: life.fut
 	futhark-pyopencl --library life.fut
