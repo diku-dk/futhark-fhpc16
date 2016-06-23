@@ -25,3 +25,7 @@ Problems
 
 If you are on a 64-bit system, then you are adviced to compile
 `apltail` with MLton, not MLKit.
+
+You must set the `TAIL_ROOT` environment variable to point at a local
+clone of the [apltail repository](https://github.com/melsman/apltail).
+This is so `aplt` can find the TAIL prelude.
