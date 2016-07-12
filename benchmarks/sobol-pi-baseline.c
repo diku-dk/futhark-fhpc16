@@ -1,5 +1,6 @@
-#include<stdio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
+#include "common.h"
 
 #define N 1000000
 #define M 2
@@ -42,22 +43,41 @@ void sobolIndR( int n, int* sob ) {
   }
 }
 
-int main() { 
-    float pi_result;
-    int i;
-    int sob[2];
-    float divisor = pow( 2.0 , NUM_BITS );
+void bench(int measure) {
+  if (measure) {
+    start_run();
+  }
 
-    int inside = 0;
+  float pi_result;
+  int i;
+  int sob[2];
+  float divisor = pow( 2.0 , NUM_BITS );
 
-    for(i=0; i<N; i++) {
-        sobolIndR( i, sob );
-        float x = sob[0] / divisor;
-        float y = sob[1] / divisor;
-        float d = sqrt(x*x + y*y);
-        if(d <= 1.0) { inside++; }
-    }
+  int inside = 0;
 
-    pi_result = (4.0*inside) / N;
-    printf("Result: %f\n", pi_result);
+  for(i=0; i<N; i++) {
+    sobolIndR( i, sob );
+    float x = sob[0] / divisor;
+    float y = sob[1] / divisor;
+    float d = sqrt(x*x + y*y);
+    if(d <= 1.0) { inside++; }
+  }
+
+  pi_result = (4.0*inside) / N;
+
+  if (measure) {
+    end_run();
+  }
+
+  printf("Result: %f\n", pi_result);
+}
+
+int main(int argc, char **argv) {
+  parse_args(argc, argv);
+
+  bench(0);
+
+  for (int i = 0; i < runs; i++) {
+    bench(1);
+  }
 }
