@@ -2,8 +2,8 @@
 #include <math.h>
 
 const float pi = 3.141592653589793;
-const int   K  = 5;
-const float a[K] = {0.31938153, -0.356563782, 1.781477937, -1.821255978, 1.330274429};
+const float a[5] = {0.31938153, -0.356563782, 1.781477937, -1.821255978, 1.330274429};
+static const int K  = sizeof(a)/sizeof(a[0]);
 
 // S - current price
 const float s = 60.0;
