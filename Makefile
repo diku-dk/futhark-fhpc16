@@ -52,9 +52,10 @@ runtimes/%-futhark-opencl.runtimes: compiled/%-futhark-opencl
 
 runtimes/%-baseline.runtimes: compiled/%-baseline
 	mkdir -p runtimes
-	compiled/$*-baseline -r ${RUNS} -t $@ > /dev/null
+	(cd input && ../compiled/$*-baseline -r ${RUNS} -t ../$@) > /dev/null
 
 compiled/%-baseline: benchmarks/%-baseline.c
+	mkdir -p compiled
 	gcc -o $@ -O3 -lm $<
 
 compiled/%-tail: benchmarks/%.apl

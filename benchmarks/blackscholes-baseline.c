@@ -1,5 +1,6 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <math.h>
+#include "common.h"
 
 const float pi = 3.141592653589793;
 const float a[5] = {0.31938153, -0.356563782, 1.781477937, -1.821255978, 1.330274429};
@@ -80,8 +81,16 @@ float price(int w) {
   return ( avg / nn ); 
 }
 
-int main() {
+int main(int argc, char **argv) {
+  parse_args(argc, argv);
+
   float res = price(n);
   printf("Price is: %f\n", res);
-}
 
+  for (int i = 0; i < runs; i++) {
+    start_run();
+    res = price(n);
+    end_run();
+    printf("Price is: %f\n", res);
+  }
+}

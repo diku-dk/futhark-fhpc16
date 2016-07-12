@@ -1,4 +1,5 @@
-#include<stdio.h>
+#include <stdio.h>
+#include "common.h"
 
 inline
 int easter(int i) {
@@ -20,12 +21,28 @@ int easter(int i) {
   return (10000*i + 100*M + D);
 }
 
-int main() {
-  int i;
+int many_easter() {
+  start_run();
   int max_val = -2147483648;
-  for(i=0; i<10000000; i++) {
+
+  for(int i=0; i<10000000; i++) {
     int val = easter(i);
-    if(max_val < val) { max_val = val; }
+    if (max_val < val) {
+      max_val = val;
+    }
   }
-  printf("MaxVal is: %d\n", max_val);
+  end_run();
+  printf("Easter: %d\n", max_val);
+
+  return max_val;
+}
+
+int main(int argc, char** argv) {
+  parse_args(argc, argv);
+
+  int res = many_easter();
+
+  for (int i = 0; i < runs; i++) {
+    many_easter();
+  }
 }
