@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include "common.h"
 
 #define STR_SIZE	256
 
@@ -150,27 +151,40 @@ float* compute_tran_temp( const float* ptemp, const float* power ) {
   return temp;
 }
 
-
-int main() {
-  int i;
-  float* res;
-  float* temp  = (float*)malloc(rows*cols*sizeof(float));
-  float* power = (float*)malloc(rows*cols*sizeof(float));
-  
-  read_input(temp , rows, cols, "../input/temp_512" );
-  read_input(power, rows, cols, "../input/power_512");
-
-  res = compute_tran_temp(temp, power);
+void bench(int bench, float *temp, float *power) {
+  if (bench) {
+    start_run();
+  }
+  float* res = compute_tran_temp(temp, power);
 
   float max_el = 1000.0;
-  for(i=0; i<rows*cols; i++) {
+  for (int i=0; i<rows*cols; i++) {
     float cur_el = res[i];
     if(max_el < cur_el) max_el = cur_el;
   }
-
+  if (bench) {
+    end_run();
+  }
+  free(res);
   printf("Max Element: %f\n", max_el);
+}
+
+int main(int argc, char **argv) {
+  float* temp  = (float*)malloc(rows*cols*sizeof(float));
+  float* power = (float*)malloc(rows*cols*sizeof(float));
+
+  read_input(temp , rows, cols, "temp_512" );
+  read_input(power, rows, cols, "power_512");
+
+  parse_args(argc, argv);
+
+  bench(0, temp, power);
+
+  for (int i = 0; i < runs; i++) {
+    bench(1, temp, power);
+  }
+
   free(temp);
   free(power);
-  free(res);
 }
 

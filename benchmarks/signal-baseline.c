@@ -1,6 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include<math.h>
+#include <math.h>
+#include "common.h"
 
 const int N = 10000000;
 
@@ -35,9 +36,28 @@ float* input(int x) {
   return arr;
 }
 
-int main() {
+void bench(int measure) {
+  if (measure) {
+    start_run();
+  }
+
   float* arr = input(N);
   float  res = redsignal(N, arr);
   printf("Result: %f\n", res);
+
+  if (measure) {
+    end_run();
+  }
+
   free(arr);
+}
+
+int main(int argc, char **argv) {
+  parse_args(argc, argv);
+
+  bench(0);
+
+  for (int i = 0; i < runs; i++) {
+    bench(1);
+  }
 }

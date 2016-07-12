@@ -40,8 +40,6 @@ int many_easter() {
 int main(int argc, char** argv) {
   parse_args(argc, argv);
 
-  int res = many_easter();
-
   for (int i = 0; i < runs; i++) {
     many_easter();
   }
