@@ -56,7 +56,7 @@ runtimes/%-baseline.runtimes: compiled/%-baseline
 
 compiled/%-baseline: benchmarks/%-baseline.c
 	mkdir -p compiled
-	gcc -o $@ -O3 -lm $<
+	gcc -o $@ -O3 -lm -Wall -Wextra $<
 
 compiled/%-tail: benchmarks/%.apl
 	mkdir -p compiled
