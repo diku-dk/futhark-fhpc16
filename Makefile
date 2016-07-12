@@ -26,7 +26,7 @@ plot.pdf: $(BENCHMARKS:%=benchmark_%)
 table.tex: $(BENCHMARKS:%=benchmark_%)
 	python tools/table.py > $@
 
-$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime
+$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime runtimes/%-baseline.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
 	mkdir -p runtimes
