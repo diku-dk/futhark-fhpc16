@@ -50,6 +50,13 @@ runtimes/%-futhark-opencl.runtimes: compiled/%-futhark-opencl
 	mkdir -p runtimes
 	futinput $* | compiled/$*-futhark-opencl -p "${OPENCL_PLATFORM}" -d "${OPENCL_DEVICE}" -r ${RUNS} -t $@ > /dev/null
 
+runtimes/%-baseline.runtimes: compiled/%-baseline
+	mkdir -p runtimes
+	compiled/$*-baseline -r ${RUNS} -t $@ > /dev/null
+
+compiled/%-baseline: benchmarks/%-baseline.c
+	gcc -o $@ -O3 -lm $<
+
 compiled/%-tail: benchmarks/%.apl
 	mkdir -p compiled
 	aplt -unsafe -c -O 2 -oc compiled/$*-tail.c  ${TAIL_PRELUDE} $<
