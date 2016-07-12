@@ -4,7 +4,6 @@ float f(float x) { return 2.0 / (x + 2.0); }
 
 int main() {
   int x  = 10000000; 
-  float fX = (float)x;
   int i;
   
   float acc = 0.0;
