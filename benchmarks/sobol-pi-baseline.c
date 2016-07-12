@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<math.h>
 
-const int n = 1000000;
-const int m        = 2;
-const int num_bits = 30;
+#define N 1000000
+#define M 2
+#define NUM_BITS 30
 
-int dirvcts[m][num_bits] = 
+int dirvcts[M][NUM_BITS] =
 {
     {
         536870912, 268435456, 134217728, 67108864, 33554432, 16777216, 8388608, 4194304, 2097152, 1048576, 524288, 262144, 131072, 65536, 32768, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
@@ -20,7 +20,7 @@ inline int grayCode(int x) { return (x >> 1) ^ x; }
 
 //Sobol Generator
 
-bool testBit(int n, int ind) {
+int testBit(int n, int ind) {
     int t = (1 << ind);
     return ( (n & t) == t );
 }
@@ -31,9 +31,9 @@ void sobolIndR( int n, int* sob ) {
   int i, j;
   int g = grayCode(n);
 
-  for(i=0; i<m; i++) {
+  for(i=0; i<M; i++) {
     int tmp = 0;
-    for(j=0; j<num_bits; j++) {
+    for(j=0; j<NUM_BITS; j++) {
         int t = (1 << j);
         int dv = (t == (g & t)) ? dirvcts[i][j] : 0;
         tmp = tmp ^ dv;
@@ -46,11 +46,11 @@ int main() {
     float pi_result;
     int i;
     int sob[2];
-    float divisor = pow( 2.0 , num_bits );
+    float divisor = pow( 2.0 , NUM_BITS );
 
     int inside = 0;
 
-    for(i=0; i<n; i++) {
+    for(i=0; i<N; i++) {
         sobolIndR( i, sob );
         float x = sob[0] / divisor;
         float y = sob[1] / divisor;
@@ -58,6 +58,6 @@ int main() {
         if(d <= 1.0) { inside++; }
     }
 
-    pi_result = (4.0*inside) / n;
+    pi_result = (4.0*inside) / N;
     printf("Result: %f\n", pi_result);
 }
