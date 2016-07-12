@@ -7,13 +7,13 @@ life ← {
     (¯1⌽⍵) + ⍵ + 1⌽⍵
   }
   neighbor ← {
-    (rowsum ¯1⊖⍵) + (rowsum ⍵) + rowsum 1⊖⍵       
+    (rowsum ¯1⊖⍵) + (rowsum ⍵) + rowsum 1⊖⍵
   }
   n ← neighbor ⍵
   (n=3) ∨ (n=4) ∧ ⍵
 }
 
-glider ← 3 3⍴1 1 1 1 0 0 0 1 0
+glider ← 4 4⍴0 0 0 0   1 1 1 0    1 0 0 0    0 1 0 0
 
 board ← ⍉ ¯300 ↑ ⍉ ¯300 ↑ glider
 square ← { x ← (5 ⊖ ⍵), 3 ⌽ ⍉ ⍵ ⋄ x ⍪ 4 ⊖ x }

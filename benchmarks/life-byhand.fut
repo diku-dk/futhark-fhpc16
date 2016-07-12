@@ -39,7 +39,7 @@ fun [n][m]bool iteration([n][m]bool board) =
 fun int main() =
   let (n, m) = (1200, 1200)
   let iterations = 100
-  let glider = reshape((3,3), [1,1,1,1,0,0,0,1,0])
+  let glider = reshape((4,4), [0,0,0,0, 1,1,1,0, 1,0,0,0, 0,1,0,0])
   let int_board = map(fn [m]int (int i) =>
                         map(fn int (int j) =>
                               unsafe glider[i%size(0,glider), j%size(1,glider)],
