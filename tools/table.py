@@ -3,7 +3,7 @@
 import sys
 import os
 
-variants = ['tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
+variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
 programs = {'funintegral'
             : {'name': 'Integral',
                'size': '$N = 10,000,000$'},
@@ -43,9 +43,9 @@ for program in programs:
             runtimes[program][variant] = '-' if runtime == 0 else '%.2f' % runtime
 
 print(r'''
-\begin{tabular}{llrrrrr}
+\begin{tabular}{llrrrrrr}
 & & & \multicolumn{2}{c}{\textbf{TAIL Futhark}} & \multicolumn{2}{c}{\textbf{Hand-written Futhark}} \\
-\textbf{Benchmark} & \textbf{Problem size} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
+\textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
 
 for program in order:
 
