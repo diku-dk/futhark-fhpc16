@@ -1,6 +1,5 @@
--- A Mandelbrot-implementation written by hand.  In contrast to the
--- APL implementation, it puts the sequential loop inside the map
--- nest.
+-- A Mandelbrot-implementation written by hand.  The sequential loop
+-- is outside the map nest.
 
 default(f32)
 
