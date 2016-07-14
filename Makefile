@@ -5,7 +5,7 @@ TAIL_CFLAGS=${CFLAGS} -I ${TAIL_ROOT}/include
 TAIL_PRELUDE=${TAIL_ROOT}/lib/prelude.apl
 RUNS=30 # Note: hardcoded in APL programs.
 
-BENCHMARKS=signal easter funintegral life blackscholes sobol-pi hotspot mandelbrot1 mandelbrot2
+BENCHMARKS=signal easter integral life blackscholes sobol-pi hotspot mandelbrot1 mandelbrot2
 
 # OpenCL configuration.  Leave blank for default.
 OPENCL_PLATFORM=

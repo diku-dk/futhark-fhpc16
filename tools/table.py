@@ -4,7 +4,7 @@ import sys
 import os
 
 variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
-programs = {'funintegral'
+programs = {'integral'
             : {'name': 'Integral',
                'size': '$N = 10,000,000$'},
             'signal'
@@ -32,7 +32,7 @@ programs = {'funintegral'
             : { 'name': 'Mandelbrot2',
                 'size': r'''$1000 \times 1000, N = 255$'''}
             }
-order = ['funintegral', 'signal', 'life', 'easter', 'blackscholes', 'sobol-pi', 'hotspot', 'mandelbrot1', 'mandelbrot2']
+order = ['integral', 'signal', 'life', 'easter', 'blackscholes', 'sobol-pi', 'hotspot', 'mandelbrot1', 'mandelbrot2']
 
 runtimes = {}
 for program in programs:
