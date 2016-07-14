@@ -18,8 +18,7 @@ variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c
 legend = ['Baseline C', 'TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL', 'Futhark C', 'Futhark OpenCL']
 colours = ['#ccff33', '#ff5555', '#559955', '#5555ff', '#888888', '#aa7799']
 
-baseline_variant = 'tail'
-secondary_baseline_variant = 'futhark-c'
+baseline_variant = 'baseline'
 
 # Read the data
 runtimes = {}
@@ -35,7 +34,6 @@ for variant in variants:
     speedups[variant] = {}
     for program in programs:
         baseline = runtimes[baseline_variant][program]
-        baseline = baseline if baseline != 0 else runtimes[secondary_baseline_variant][program]
         runtime = runtimes[variant][program]
 
         if runtime != 0:

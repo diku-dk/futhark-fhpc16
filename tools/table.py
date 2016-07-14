@@ -44,7 +44,7 @@ for program in programs:
 
 print(r'''
 \begin{tabular}{llrrrrrr}
-& & & \multicolumn{2}{c}{\textbf{TAIL Futhark}} & \multicolumn{2}{c}{\textbf{Hand-written Futhark}} \\
+& & & & \multicolumn{2}{c}{\textbf{TAIL Futhark}} & \multicolumn{2}{c}{\textbf{Hand-written Futhark}} \\
 \textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
 
 for program in order:
