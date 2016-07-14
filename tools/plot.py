@@ -54,7 +54,7 @@ font = {'family': 'normal',
 plt.rc('font', **font)
 
 ax.set_yscale('log')
-ax.set_ylim([0.5,100.0])
+ax.set_ylim([0.2,100.0])
 ax.set_ylabel('Speedup')
 ax.set_xticks(ind + M*width/2)
 ax.set_xticklabels(programs)
@@ -70,7 +70,7 @@ for (i, variant) in zip(range(M), variants):
     rects = ax.bar(ind+i*width, values, width, color=colours[i])
 
     for rect in rects:
-        height = 0.45
+        height = 0.19
         if rect.get_height() > 0:
             ax.text(rect.get_x() + rect.get_width()/2., height,
                     '%.1f' % rect.get_height(),
