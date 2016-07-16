@@ -48,9 +48,11 @@ print(r'''
 \textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
 
 for program in order:
-
+    program_runtimes = []
+    for variant in variants:
+        program_runtimes.append(runtimes[program][variant])
     print(programs[program]['name'] + ' & ' +
           programs[program]['size'] + ' & ' +
-          ' & '.join(runtimes[program].values()) + r''' \\''')
+          ' & '.join(program_runtimes) + r''' \\''')
 
 print(r'''\end{tabular}''')
