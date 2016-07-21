@@ -25,7 +25,7 @@ plot.pdf: $(BENCHMARKS:%=benchmark_%)
 table.tex: $(BENCHMARKS:%=benchmark_%)
 	python tools/table.py > $@
 
-$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime runtimes/%-baseline.avgtime
+$(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-futhark-c.avgtime runtimes/%-futhark-opencl.avgtime runtimes/%-futhark-pyopencl.avgtime runtimes/%-byhand-futhark-c.avgtime runtimes/%-byhand-futhark-opencl.avgtime runtimes/%-byhand-futhark-pyopencl.avgtime runtimes/%-baseline.avgtime
 
 runtimes/%-tail.avgtime: compiled/%-tail
 	mkdir -p runtimes
@@ -49,6 +49,10 @@ runtimes/%-futhark-opencl.runtimes: compiled/%-futhark-opencl
 	mkdir -p runtimes
 	futinput $* | compiled/$*-futhark-opencl -p "${OPENCL_PLATFORM}" -d "${OPENCL_DEVICE}" -r ${RUNS} -t $@ > /dev/null
 
+runtimes/%-futhark-pyopencl.runtimes: compiled/%-futhark-pyopencl
+	mkdir -p runtimes
+	futinput $* | compiled/$*-futhark-pyopencl -p "${OPENCL_PLATFORM}" -d "${OPENCL_DEVICE}" -r ${RUNS} -t $@ > /dev/null
+
 runtimes/%-baseline.runtimes: compiled/%-baseline
 	mkdir -p runtimes
 	(cd input && ../compiled/$*-baseline -r ${RUNS} -t ../$@) > /dev/null
@@ -70,6 +74,10 @@ compiled/%-futhark-opencl: compiled/%.fut
 	mkdir -p compiled
 	futhark-opencl $< -o $@
 
+compiled/%-futhark-pyopencl: compiled/%.fut
+	mkdir -p compiled
+	futhark-pyopencl $< -o $@
+
 compiled/%-byhand-futhark-c: benchmarks/%-byhand.fut
 	mkdir -p compiled
 	futhark-c $< -o $@
@@ -77,6 +85,10 @@ compiled/%-byhand-futhark-c: benchmarks/%-byhand.fut
 compiled/%-byhand-futhark-opencl: benchmarks/%-byhand.fut
 	mkdir -p compiled
 	futhark-opencl $< -o $@
+
+compiled/%-byhand-futhark-pyopencl: benchmarks/%-byhand.fut
+	mkdir -p compiled
+	futhark-pyopencl $< -o $@
 
 compiled/%.fut: compiled/%.tail
 	mkdir -p compiled

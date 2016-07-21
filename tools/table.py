@@ -44,8 +44,8 @@ for program in programs:
 
 print(r'''
 \begin{tabular}{llrrrrrr}
-& & & & \multicolumn{2}{c}{\textbf{TAIL Futhark}} & \multicolumn{2}{c}{\textbf{Hand-written Futhark}} \\
-\textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Sequential} & \textbf{Parallel} \\''')
+& & & & \multicolumn{3}{c}{\textbf{TAIL Futhark}} & \multicolumn{3}{c}{\textbf{Hand-written Futhark}} \\
+\textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Parallel (Python)} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Parallel (Python)} \\''')
 
 for program in order:
     program_runtimes = []

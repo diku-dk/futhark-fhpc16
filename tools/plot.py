@@ -14,9 +14,9 @@ import os
 
 outputfile = sys.argv[1]
 programs = sys.argv[2:]
-variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
-legend = ['Baseline C', 'TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL', 'Futhark C', 'Futhark OpenCL']
-colours = ['#ccff33', '#ff5555', '#559955', '#5555ff', '#888888', '#aa7799']
+variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'futhark-pyopencl', 'byhand-futhark-c', 'byhand-futhark-opencl', 'byhand-futhark-pyopencl']
+legend = ['Baseline C', 'TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL' , 'TAIL Futhark PyOpenCL', 'Futhark C', 'Futhark OpenCL', 'Futhark PyOpenCL']
+colours = ['#ccff33', '#ff5555', '#559955', '#5555ff', '#1111ff', '#888888', '#aa7799', '#227799']
 
 baseline_variant = 'baseline'
 
