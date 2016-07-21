@@ -3,7 +3,7 @@
 import sys
 import os
 
-variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'byhand-futhark-c', 'byhand-futhark-opencl']
+variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'futhark-pyopencl', 'byhand-futhark-c', 'byhand-futhark-opencl', 'byhand-futhark-pyopencl']
 programs = {'integral'
             : {'name': 'Integral',
                'size': '$N = 10,000,000$'},
@@ -12,7 +12,7 @@ programs = {'integral'
                'size': '$N = 50,000,000$'},
             'life'
             : {'name': 'Game of Life',
-               'size': r'''$1200 \times 1200, N = 100$'''},
+               'size': r'''$1200^2, N = 100$'''},
             'easter'
             : {'name': 'Easter',
                'size': '$N = 10,000,000$'},
@@ -24,13 +24,13 @@ programs = {'integral'
                'size': '$N = 10,000,000$'},
             'hotspot'
             : {r'name': 'HotSpot',
-               'size': r'''$512 \times 512, N = 360$'''},
+               'size': r'''$512^2, N = 360$'''},
             'mandelbrot1'
             : { 'name': 'Mandelbrot1',
-                'size': r'''$1000 \times 1000, N = 255$'''},
+                'size': r'''$1000^2, N = 255$'''},
             'mandelbrot2'
             : { 'name': 'Mandelbrot2',
-                'size': r'''$1000 \times 1000, N = 255$'''}
+                'size': r'''$1000^2, N = 255$'''}
             }
 order = ['integral', 'signal', 'life', 'easter', 'blackscholes', 'sobol-pi', 'hotspot', 'mandelbrot1', 'mandelbrot2']
 
@@ -43,9 +43,9 @@ for program in programs:
             runtimes[program][variant] = '-' if runtime == 0 else '%.2f' % runtime
 
 print(r'''
-\begin{tabular}{llrrrrrr}
+\begin{tabular}{llrrrrrrrr}
 & & & & \multicolumn{3}{c}{\textbf{TAIL Futhark}} & \multicolumn{3}{c}{\textbf{Hand-written Futhark}} \\
-\textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Parallel (Python)} & \textbf{Sequential} & \textbf{Parallel} & \textbf{Parallel (Python)} \\''')
+\textbf{Benchmark} & \textbf{Problem size} & \textbf{Baseline C} & \textbf{TAIL C} & \textbf{Sequential} & \textbf{OpenCL} & \textbf{PyOpenCL} & \textbf{Sequential} & \textbf{Parallel} & \textbf{PyOpenCL} \\''')
 
 for program in order:
     program_runtimes = []

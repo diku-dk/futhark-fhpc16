@@ -16,7 +16,7 @@ outputfile = sys.argv[1]
 programs = sys.argv[2:]
 variants = ['baseline', 'tail', 'futhark-c', 'futhark-opencl', 'futhark-pyopencl', 'byhand-futhark-c', 'byhand-futhark-opencl', 'byhand-futhark-pyopencl']
 legend = ['Baseline C', 'TAIL C', 'TAIL Futhark C', 'TAIL Futhark OpenCL' , 'TAIL Futhark PyOpenCL', 'Futhark C', 'Futhark OpenCL', 'Futhark PyOpenCL']
-colours = ['#ccff33', '#ff5555', '#559955', '#5555ff', '#1111ff', '#888888', '#aa7799', '#227799']
+colours = ['#ccff33', '#ff5555', '#559955', '#5555ff', '#bbbbff', '#888888', '#aa7799', '#44ddff']
 
 baseline_variant = 'baseline'
 
@@ -50,7 +50,7 @@ width = 1.0/(M+1)        # the width of the bars
 fig, ax = plt.subplots()
 
 font = {'family': 'normal',
-        'size' : 18}
+        'size' : 16}
 plt.rc('font', **font)
 
 ax.set_yscale('log')
