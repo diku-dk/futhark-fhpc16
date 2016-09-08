@@ -18,7 +18,7 @@
 --}
 --(run bench 30) 0
 
-fun int easter(int i) = 
+fun easter(i: int): int = 
   let g = (i % 19) + 1 in
   let c = i / 100 + 1  in
   let x = (c*3)/4 - 12 in
@@ -35,8 +35,8 @@ fun int easter(int i) =
   let d = n - 31*b in
   10000*i + 100*m + d
   
-fun int max(int x, int y) = if x < y then y else x
+fun max(x: int) (y: int): int = if x < y then y else x
 
-fun int main() =
-  let dates = map(easter, map(+0, iota(10000000))) in
-  reduce(max, -2147483648, dates)
+fun main(): int =
+  let dates = map easter (map (+0) (iota(10000000))) in
+  reduce max (-2147483648) dates

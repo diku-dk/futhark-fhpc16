@@ -1,6 +1,6 @@
 default(f32)
 
-fun [2][30]int dirvcts() = 
+fun dirvcts(): [2][30]int = 
     [
 	    [
 		536870912, 268435456, 134217728, 67108864, 33554432, 16777216, 8388608, 4194304, 2097152, 1048576, 524288, 262144, 131072, 65536, 32768, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
@@ -11,12 +11,12 @@ fun [2][30]int dirvcts() =
     ]
 
 
-fun int grayCode(int x) = (x >> 1) ^ x
+fun grayCode(x: int): int = (x >> 1) ^ x
 
 ----------------------------------------
 --- Sobol Generator
 ----------------------------------------
-fun bool testBit(int n, int ind) =
+fun testBit(n: int, ind: int): bool =
     let t = (1 << ind) in (n & t) == t
 
 -----------------------------------------------------------------
@@ -25,30 +25,30 @@ fun bool testBit(int n, int ind) =
 ----    Currently Futhark hoists it outside, but this will
 ----    not allow fusing the filter with reduce => redomap,
 -----------------------------------------------------------------
-fun int xorInds(int n, [num_bits]int dir_vs) =
-    let reldv_vals = map( fn int (int dv, int i) => 
+fun xorInds(n: int) (dir_vs: [num_bits]int): int =
+    let reldv_vals = map (fn  (dv: int, i: int): int  => 
                             if testBit(grayCode(n),i) 
                             then dv else 0
-                        , zip(dir_vs,iota(num_bits)) ) in
-    reduce( ^, 0, reldv_vals )
+                        ) (zip  (dir_vs) (iota(num_bits)) ) in
+    reduce (^) 0 (reldv_vals )
 
-fun [m]int sobolIndI ( [m][num_bits]int dir_vs, int n ) =
-    map( xorInds(n), dir_vs )
+fun sobolIndI (dir_vs:  [m][num_bits]int, n: int ): [m]int =
+    map (xorInds(n)) (dir_vs )
 
-fun [m]f32 sobolIndR( [m][num_bits]int dir_vs, int n ) =
+fun sobolIndR(dir_vs:  [m][num_bits]int) (n: int ): [m]f32 =
     let divisor = 2.0 ** f32(num_bits) in
     let arri    = sobolIndI( dir_vs, n )     in
-        map( fn f32 (int x) => f32(x) / divisor, arri )
+        map (fn  (x: int): f32  => f32(x) / divisor) arri
 
-fun f32 main() = 
+fun main(): f32 = 
     let n = 1000000 in
-    let rand_nums = map(sobolIndR(dirvcts()), iota(n)) in
-    let dists     = map ( fn f32 ([2]f32 xy) =>
+    let rand_nums = map (sobolIndR(dirvcts())) (iota(n)) in
+    let dists     = map  (fn  (xy: [2]f32): f32  =>
                             let (x,y) = (xy[0],xy[1]) in sqrt32(x*x + y*y)
-                        , rand_nums)
+                        ) (rand_nums)
     in
-    let bs        = map( fn int (f32 d) => if d <= 1.0f32 then 1 else 0
-                       , dists ) 
+    let bs        = map (fn  (d: f32): int  => if d <= 1.0f32 then 1 else 0
+                       ) dists 
     in
-    let inside    = reduce(+, 0, bs) in
+    let inside    = reduce (+) 0 bs in
     4.0f32*f32(inside)/f32(n)    
