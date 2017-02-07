@@ -3,11 +3,25 @@ Empirical evaluation code and demos for our FHPC'16 paper
 
 Benchmarks are in `benchmarks`, demos in `demos`.
 
-To run these programs you must have [the Futhark
-compiler](https://github.com/HIPERFIT/futhark) (`futhark-opencl` must
-be in your `$PATH`), [the `apltail`
-compiler](https://github.com/melsman/apltail/) and a working OpenCL
-setup.  You will need a *nix-like system.  OpenCL execution will by
+To run these programs you must have:
+
+1. [the Futhark compiler]
+    https://github.com/HIPERFIT/futhark
+    `futhark-opencl` must be in your `$PATH`,
+
+2. [the `apltail` compiler]
+   https://github.com/melsman/apltail/
+
+3. [the Tail-to-Futhark compiler]
+   https://github.com/henrikurms/tail2futhark
+   `tail2futhark` must be in you `$PATH`
+   For example, after cloning the repository you can install it by
+   $ stack setup
+   $ stack install
+
+4. a working OpenCL setup.
+
+You will need a *nix-like system.  OpenCL execution will by
 default use the first detected platform and device.  You can edit the
 `Makefile` to select a different platform and device.
 
