@@ -10,8 +10,7 @@ To run these programs you must have:
 
 2. [the `apltail` compiler](https://github.com/melsman/apltail/)
 
-3. [the Tail-to-Futhark compiler]
-   https://github.com/henrikurms/tail2futhark
+3. [the Tail-to-Futhark compiler](https://github.com/henrikurms/tail2futhark)
    `tail2futhark` must be in you `$PATH`
    For example, after cloning the repository you can install it by
    $ stack setup
