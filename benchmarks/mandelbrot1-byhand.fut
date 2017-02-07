@@ -1,6 +1,8 @@
 -- A Mandelbrot-implementation written by hand.  The sequential loop
 -- is outside the map nest.
 
+import "futlib/numeric"
+
 default(f32)
 
 type complex = (f32, f32)
@@ -21,19 +23,19 @@ fun addComplex(x: complex, y: complex): complex =
   (a + c,
    b + d)
 
-fun mandelbrot(screenX: int, screenY: int, depth: int, view: (f32,f32,f32,f32)): [screenY][screenX]int =
+fun mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)): [screenY][screenX]i32 =
   let (xmin, ymin, xmax, ymax) = view
   let sizex = xmax - xmin
   let sizey = ymax - ymin
   let c0s = reshape (screenX*screenY)
-                    (map (fn  (y: int): [screenX]complex  =>
-                          map  (fn  (x: int): complex  =>
+                    (map (\  (y: i32): [screenX]complex  ->
+                          map  (\  (x: i32): complex  ->
                                  (xmin + (f32(x) * sizex) / f32(screenX),
                                   ymin + (f32(y) * sizey) / f32(screenY))) (
                                iota(screenX))) (iota(screenY)))
   let escapes = replicate (screenY*screenX) 0
   loop ((cs, escapes) = (c0s, escapes)) = for i < depth do
-    unzip(zipWith (fn  (c0: complex) (c: complex) (j: int): (complex, int)  =>
+    unzip(zipWith (\  (c0: complex) (c: complex) (j: i32): (complex, i32)  ->
                     (addComplex(c0, multComplex(c, c)),
                      j + if dot(c) < 4.0 then 1 else 0)) c0s cs escapes)
   in reshape (screenX,screenY) escapes
@@ -45,5 +47,5 @@ fun main(): f32 =
   let view = (-2.0, -0.75, 0.75, 0.75)
   let escapes = mandelbrot(screenX, screenY, depth, view)
   in reduce (+) (0.0) (reshape (1000*1000)
-                            (map (fn  (row: []int): [screenX]f32  =>
+                            (map (\  (row: []i32): [screenX]f32  ->
                                     map (/f32(depth)) (map f32 row)) escapes))

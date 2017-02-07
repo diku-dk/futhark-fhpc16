@@ -18,7 +18,9 @@
 --}
 --(run bench 30) 0
 
-fun easter(i: int): int = 
+import "futlib/numeric"
+
+fun easter(i: i32): i32 = 
   let g = (i % 19) + 1 in
   let c = i / 100 + 1  in
   let x = (c*3)/4 - 12 in
@@ -35,8 +37,8 @@ fun easter(i: int): int =
   let d = n - 31*b in
   10000*i + 100*m + d
   
-fun max(x: int) (y: int): int = if x < y then y else x
+fun max(x: i32) (y: i32): i32 = if x < y then y else x
 
-fun main(): int =
+fun main(): i32 =
   let dates = map easter (map (+0) (iota(10000000))) in
   reduce max (-2147483648) dates

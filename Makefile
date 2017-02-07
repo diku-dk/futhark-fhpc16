@@ -29,11 +29,11 @@ $(BENCHMARKS:%=benchmark_%): benchmark_%: runtimes/%-tail.avgtime runtimes/%-fut
 
 runtimes/%-tail.avgtime: compiled/%-tail
 	mkdir -p runtimes
-	(cd input && ../compiled/$*-tail) | grep AVGTIMING | awk '{print $$2}' > $@
+	(cd input && ../compiled/$*-tail) | grep AVGTIMING | gawk '{print $$2}' > $@
 
 runtimes/%.avgtime: runtimes/%.runtimes
 	mkdir -p runtimes
-	awk '{sum += strtonum($$0) / 1000.0} END{print sum/NR}' < $< > $@
+	gawk '{sum += strtonum($$0) / 1000.0} END{print sum/NR}' < $< > $@
 
 # Fallback rules for missing implementations
 runtimes/mandelbrot1-tail.avgtime:

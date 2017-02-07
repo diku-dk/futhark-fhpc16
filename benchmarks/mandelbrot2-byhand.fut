@@ -1,6 +1,8 @@
 -- A Mandelbrot-implementation written by hand.  The sequential loop
 -- inside the map nest.
 
+import "futlib/numeric"
+
 default(f32)
 
 type complex = (f32, f32)
@@ -21,18 +23,18 @@ fun addComplex(x: complex, y: complex): complex =
   (a + c,
    b + d)
 
-fun divergence(depth: int, c0: complex): int =
+fun divergence(depth: i32, c0: complex): i32 =
   loop ((c, j) = (c0, 0)) = for i < depth do
     (addComplex(c0, multComplex(c, c)),
      j + if dot(c) < 4.0 then 1 else 0) in
   j
 
-fun mandelbrot(screenX: int, screenY: int, depth: int, view: (f32,f32,f32,f32)): [screenY][screenX]int =
+fun mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)): [screenY][screenX]i32 =
   let (xmin, ymin, xmax, ymax) = view in
   let sizex = xmax - xmin in
   let sizey = ymax - ymin in
-  map (fn  (y: int): [screenX]int  =>
-        map  (fn  (x: int): int  =>
+  map (\  (y: i32): [screenX]i32  ->
+        map  (\  (x: i32): i32  ->
                let c0 = (xmin + (f32(x) * sizex) / f32(screenX),
                          ymin + (f32(y) * sizey) / f32(screenY)) in
                divergence(depth, c0)
@@ -46,5 +48,5 @@ fun main(): f32 =
   let view = (-2.0, -0.75, 0.75, 0.75)
   let escapes = mandelbrot(screenX, screenY, depth, view)
   in reduce (+) (0.0) (reshape(1000*1000)
-                            (map (fn  (row: []int): [screenX]f32  =>
+                            (map (\  (row: []i32): [screenX]f32  ->
                                   map (/f32(depth)) (map f32 row)) escapes))

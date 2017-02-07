@@ -6,7 +6,6 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <error.h>
 
 static struct timeval t_start, t_end;
 
@@ -24,11 +23,13 @@ void parse_args(int argc, char **argv) {
     case 't':
       runtime_file = fopen(optarg, "w");
       if (runtime_file == NULL) {
-        error(1, errno, "when opening %s", optarg);
+        fprintf(stderr, "Error %d when opening %s", errno, optarg);
+        exit(1);
       }
       break;
     default:
-      error(1, 0, "unknown option %c", c);
+      fprintf(stderr, "Error 0 unknown option %c", c);
+      exit(1);
     }
 }
 

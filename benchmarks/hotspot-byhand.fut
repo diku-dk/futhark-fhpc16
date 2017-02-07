@@ -1,6 +1,8 @@
 -- Code and comments based on
 -- https://github.com/kkushagra/rodinia/blob/master/openmp/hotspot/hotspot_openmp.cpp
 
+import "futlib/numeric"
+
 default(f32)
 
 -- Maximum power density possible (say 300W for a 10mm x 10mm chip)
@@ -30,8 +32,8 @@ fun amb_temp(): f32 = 80.0
 fun single_iteration(temp: [row][col]f32, power: [row][col]f32,
                      cap: f32, rx: f32, ry: f32, rz: f32,
                      step: f32): [][]f32 =
-  map  (fn  (r: int): []f32  =>
-         map (fn  (c: int): f32  =>
+  map  (\  (r: i32): []f32  ->
+         map (\  (c: i32): f32  ->
                let temp_el = unsafe temp[r,c] in
                let delta =
                  (step / cap) *
@@ -75,7 +77,7 @@ fun single_iteration(temp: [row][col]f32, power: [row][col]f32,
 -- difference equations by iterating.
 --
 -- Returns a new 'temp' array.
-fun compute_tran_temp(num_iterations: int, temp: [row][col]f32, power: [row][col]f32): [row][col]f32 =
+fun compute_tran_temp(num_iterations: i32, temp: [row][col]f32, power: [row][col]f32): [row][col]f32 =
   let grid_height = chip_height() / f32(row) in
   let grid_width = chip_width() / f32(col) in
   let cap = factor_chip() * spec_heat_si() * t_chip() * grid_width * grid_height in
@@ -90,7 +92,7 @@ fun compute_tran_temp(num_iterations: int, temp: [row][col]f32, power: [row][col
 
 fun max(x: f32) (y: f32): f32 = if x < y then y else x
 
-fun main(num_iterations: int, row: int, col: int, temp: []f32, power: []f32): f32 =
+fun main(num_iterations: i32, row: i32, col: i32, temp: []f32, power: []f32): f32 =
   let temp = reshape (row, col) temp
   let power = reshape (row, col) power
   let temp' = compute_tran_temp(num_iterations, temp, power)

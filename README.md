@@ -18,6 +18,10 @@ To run these programs you must have:
 
 4. a working OpenCL setup.
 
+5. gawk (a version that supports the `strtonum` function) 
+
+6. matplotlib
+
 You will need a *nix-like system.  OpenCL execution will by
 default use the first detected platform and device.  You can edit the
 `Makefile` to select a different platform and device.
