@@ -5,12 +5,10 @@ Benchmarks are in `benchmarks`, demos in `demos`.
 
 To run these programs you must have:
 
-1. [the Futhark compiler]
-    https://github.com/HIPERFIT/futhark
+1. [the Futhark compiler](https://github.com/HIPERFIT/futhark)
     `futhark-opencl` must be in your `$PATH`,
 
-2. [the `apltail` compiler]
-   https://github.com/melsman/apltail/
+2. [the `apltail` compiler](https://github.com/melsman/apltail/)
 
 3. [the Tail-to-Futhark compiler]
    https://github.com/henrikurms/tail2futhark
