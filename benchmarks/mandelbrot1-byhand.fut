@@ -1,29 +1,29 @@
 -- A Mandelbrot-implementation written by hand.  The sequential loop
 -- is outside the map nest.
 
-import "futlib/numeric"
+import "/futlib/math"
 
 default(f32)
 
 type complex = (f32, f32)
 
-fun dot(c: complex): f32 =
+let dot(c: complex): f32 =
   let (r, i) = c in
   r * r + i * i
 
-fun multComplex(x: complex, y: complex): complex =
+let multComplex(x: complex, y: complex): complex =
   let (a, b) = x in
   let (c, d) = y in
   (a*c - b * d,
    a*d + b * c)
 
-fun addComplex(x: complex, y: complex): complex =
+let addComplex(x: complex, y: complex): complex =
   let (a, b) = x in
   let (c, d) = y in
   (a + c,
    b + d)
 
-fun mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)): [screenY][screenX]i32 =
+let mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)): [screenY][screenX]i32 =
   let (xmin, ymin, xmax, ymax) = view
   let sizex = xmax - xmin
   let sizey = ymax - ymin
@@ -34,13 +34,14 @@ fun mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)):
                                   ymin + (f32(y) * sizey) / f32(screenY))) (
                                iota(screenX))) (iota(screenY)))
   let escapes = replicate (screenY*screenX) 0
-  loop ((cs, escapes) = (c0s, escapes)) = for i < depth do
-    unzip(zipWith (\  (c0: complex) (c: complex) (j: i32): (complex, i32)  ->
-                    (addComplex(c0, multComplex(c, c)),
-                     j + if dot(c) < 4.0 then 1 else 0)) c0s cs escapes)
-  in reshape (screenX,screenY) escapes
+  let (_, esc) =
+    loop (cs, escapes) = (c0s, escapes) for i < depth do
+      unzip(map (\  (c0: complex) (c: complex) (j: i32): (complex, i32)  ->
+                      (addComplex(c0, multComplex(c, c)),
+                       j + if dot(c) < 4.0 then 1 else 0)) c0s cs escapes)
+  in reshape (screenX,screenY) esc
 
-fun main(): f32 =
+let main(): f32 =
   let depth = 255
   let screenX = 1000
   let screenY = 1000
