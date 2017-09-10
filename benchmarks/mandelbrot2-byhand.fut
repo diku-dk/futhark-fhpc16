@@ -27,7 +27,7 @@ let divergence(depth: i32, c0: complex): i32 =
   let (_,j) =
     loop (c, j) = (c0, 0) for i < depth do
       (addComplex(c0, multComplex(c, c)),
-       j + if dot(c) < 4.0 then 1 else 0) in
+       j + if dot(c) < 4.0 then 1 else 0)
   in j
 
 let mandelbrot(screenX: i32, screenY: i32, depth: i32, view: (f32,f32,f32,f32)): [screenY][screenX]i32 =
