@@ -44,7 +44,7 @@ def showText(what, where):
 
 def render():
     fieldarr = numpy.array([miny, maxy, minx, maxx], dtype=numpy.float32)
-    limitarr = numpy.array([limit], dtype=numpy.int)
+    limitarr = numpy.array([limit], dtype=numpy.int32)
     start = time.time()
     reds, greens, blues = l.main(sizearr, fieldarr, limitarr)
     frame[:,:,0] = reds.get()
